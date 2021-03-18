@@ -1,25 +1,46 @@
 // Import stylesheets
-import "./style.css"; 
-
-var cityElems = document.getElementsByClassName("città");
-for (let elem of cityElems ) {
-  elem.onclick = () => display(elem.innerHTML);
-  elem.onmouseover = () => {
-    elem.style.color="red";
-    elem.style.fontStyle="italic";
-  }
-  elem.onmouseout = () => {
-    elem.style.color="black";
-    elem.style.fontStyle="inherit";
-  }
-}
+import "./style.css";
 
 var submit = document.getElementById("submit");
 submit.onclick = () => {
   var add = document.getElementById("add").value;
-  console.log(add);
+  var elLi = document.createElement("li");
+  var liID = document.createAttribute("id");
+  liID.value = "temp";
+  elLi.setAttributeNode(liID);
+  document.getElementById("Temperature").appendChild(elLi);
+  var elButt = document.createElement("button");
+  elButt.innerHTML = add;
+  var elClass = document.createAttribute("class");
+  var elType = document.createAttribute("type");
+  var elID = document.createAttribute("id");
+  elClass.value = "città";
+  elType.value = "button";
+  elID.value = "view";
+  elButt.setAttributeNode(elClass);
+  elButt.setAttributeNode(elType);
+  elButt.setAttributeNode(elID);
+  document.getElementById("temp").appendChild(elButt);
+  var bottone = document.getElementById("view");
+  bottone.onclick = () => { display(bottone.innerHTML); }
+ 
+};
 
+
+
+var cityElems = document.getElementsByClassName("città");
+for (let elem of cityElems) {
+  elem.onclick = () => display(elem.innerHTML);
+  elem.onmouseover = () => {
+    elem.style.color = "red";
+    elem.style.fontStyle = "italic";
+  };
+  elem.onmouseout = () => {
+    elem.style.color = "black";
+    elem.style.fontStyle = "inherit";
+  };
 }
+
 
 // Funzione collegata ai bottoni
 // "window" necessario in StackBlitz, può essere
@@ -33,7 +54,13 @@ function display(city) {
     if (request.status === 200) {
       var dataObject = JSON.parse(request.response);
       document.getElementById("risposta").innerHTML =
-        "A " + city + " ci sono " + dataObject.main.temp + " gradi.               La pressione è di " + dataObject.main.pressure + "";
+        "A " +
+        city +
+        " ci sono " +
+        dataObject.main.temp +
+        " gradi.               La pressione è di " +
+        dataObject.main.pressure +
+        "";
     } else {
       document.getElementById("risposta").innerText = "Errore";
     }
@@ -48,4 +75,4 @@ function display(city) {
   );
   // Applico il metodo send (al termine chiamerà il callback "onload")
   request.send();
-};
+}
